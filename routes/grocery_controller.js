@@ -19,7 +19,8 @@ exports.addGrocery = function(req, res){
                 name : newGrocery.name,
                 quantity: newGrocery.quantity,
                 bought: newGrocery.bought,
-                obsolete: newGrocery.obsolete
+                obsolete: newGrocery.obsolete,
+                members: this_user.members
             });
         }
     );
