@@ -21,6 +21,10 @@ h1{
 	margin-bottom: 0px;
 }
 
+h1 img{
+	width: 180px;
+}
+
 input:focus{ /* removes highlight when clicking on input */
 	outline: none;
 }
