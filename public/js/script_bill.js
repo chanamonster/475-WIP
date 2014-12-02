@@ -65,7 +65,7 @@ function getBills() {
 		data: {},
 		success: function(bills) {
 			if (bills.length == 0){
-				message = "There are no bills yet."
+				message = "<br><i>There are no bills yet.</i>"
 				$("#all-bills").html(message)
 			} else {
 				$.ajax({

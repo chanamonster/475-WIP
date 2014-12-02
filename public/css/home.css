@@ -70,7 +70,7 @@ input:focus{ /* removes highlight when clicking on input */
 }
 
 #signup-box{
-	background: #096f7a;
+	background: #038693; /*#096f7a;*/
 	width: 300px;
 	height: 400px;
     border-radius: 25px;

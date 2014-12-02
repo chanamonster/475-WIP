@@ -37,9 +37,9 @@ function updateDashboardBills(){
 		success: function(bills) {
 			if (bills.length == 0) {
 				message1 = "<i>I currently don't owe any money.</i>"
-				$("#my-payments").html(message1);
+				$("#dash-my-payments").html(message1);
 				message2 = "<i>No one owes me any bill payments.</i>"
-				$("#pay-to-me").html(message2);
+				$("#dash-pay-to-me").html(message2);
 			} else {
 				// console.log(bills)
 				$.ajax({
@@ -90,7 +90,7 @@ function updateDashboardChores(){
 			success: function(chores) {
 				// console.log(chores)
 				if (chores.length == 0){
-					$("#my-chores").html("</i>I don't have any chores to do this week.</i>")
+					// $("#dash-my-chores").html("</i>I don't have any chores to do this week.</i>")
 				}
 				else{
 					$.ajax({
@@ -101,9 +101,9 @@ function updateDashboardChores(){
 						// console.log(assigns)
 						my_assignments = assigns["my_assignments_this"]
 						console.log("Parsing My ")
-						my_message = parseAssignments(my_assignments, chores)
 						
-						if (my_message.length != ""){
+						if (my_assignments.length != 0){
+							my_message = parseAssignments(my_assignments, chores)
 							$("#dash-my-chores").html(my_message)
 						} else{ $("#dash-my-chores").html("<i>I don't have any chores to do this week.</i>")}
 						
