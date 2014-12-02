@@ -275,7 +275,7 @@ function addNewBill(){
 			    return this.value;
 			  })
 			  .get()
-	partial_amount = ""
+	partial_amount = 0
 
 	$.ajax({
 			url: "bill_add_new",

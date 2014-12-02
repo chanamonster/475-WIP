@@ -178,6 +178,7 @@ exports.getAssignments = function(req,res){
             // data.push(chore.chore_name);
         })
         data["my_assignments_this"].sort(compare_date);
+        console.log(data["my_assignments_this"])
         // data["their_assignments"].sort(compare_date);
         res.send(data)
     })
@@ -253,10 +254,12 @@ exports.undoCompleteChore = function(req, res){
 };
 
 function compare_date(a,b) {
+  aDate = new Date(a.due_date)
+  bDate = new Date(b.due_date)
     console.log("sorting assignments");
-  if (a.due_date< b.due_date)
+  if (aDate< bDate)
      return -1;
-  if (a.due_date > b.due_date)
+  if (aDate > bDate)
     return 1;
   return 0;
 }

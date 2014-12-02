@@ -342,7 +342,7 @@ h1{
 /*--------------------- DASHBOARD --------------------*/
 
 #dash-my-chores td{
-	width: 95px;
+	min-width: 95px;
 	padding: 0px;
 }
 

@@ -448,7 +448,7 @@ function addExistingChore(){
 	assignee = $("#assignee").val();
 	chore_type = $("#chore_type").val();
 	rate_freq = $('input[name=rate_frequency]:checked').val();
-	// console.log("RATE FREQ: ", rate_freq);
+	console.log("RATE FREQ: ", rate_freq);
 	rate = $("#rate").val();
 	due_date = $("#due_date").val();
 	end_date = $("#end_date").val();

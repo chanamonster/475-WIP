@@ -109,17 +109,24 @@
             <div class="form_title">RECORD AN EXPENSE</div>
             <div id="bill_add_form">
               Bill Name: <input id="bill_name" name ="bill_name" type="text" placeholder="Bill Name"/><br>
-              Total Amount of Bill: <input id="amount" name="amount" type="text" placeholder="Amount"/><br>
+              Total Amount of Bill: $<input id="amount" name="amount" type="text" placeholder="Amount"/><br>
               Date Paid: <input id="date" name="date" type="date" placeholder="MM/DD/YYYY"><br>
               Paid By: <select id="user_name" name="user_name"> 
                 <% for(var i=0; i<members.length; i++) {%>
-                 <option value="<%= members[i] %>"> <%= members[i] %> </option>
-              <% } %><br>
+                  <% if (members[i] == this_user.name){ %>
+                    <option value="<%= members[i] %>"> Me </option>
+                  <% } else { %>
+                    <option value="<%= members[i] %>"> <%= members[i] %> </option>
+                <% }} %><br>
               </select><br>
               Charge To: <br>
               <% for(var i=0; i<members.length; i++) {%>
-               <input type="checkbox" value="<%= members[i] %>" name="payer" class="payer_class" checked><%= members[i] %> <br>
-              <% } %><br>
+                <% if (members[i] == this_user.name){ %>
+                    <input type="checkbox" value="<%= members[i] %>" name="payer" class="payer_class" checked> Me <br>
+                <% } else { %>
+                    <input type="checkbox" value="<%= members[i] %>" name="payer" class="payer_class" checked><%= members[i] %> 
+               <br>
+              <% }} %><br>
               <input id="partial_amount" name="partial_amount" type="hidden" placeholder="Partial Amount"/><br>
               <input id="bill-formb"  type="submit" value="Add Bill"/>
             </div>
