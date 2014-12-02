@@ -13,7 +13,7 @@ function updateDashboardGroceries(){
 			data: {},
 			success: function(data) {
 				if (data.length == 0){
-					message = "<i>There are no grocery items on the shopping list</i>"
+					message = "<br><i>There are no grocery items on the shopping list</i>"
 				} else {
 					message = "<ul>"
 					data.forEach(function(item){
@@ -40,6 +40,8 @@ function updateDashboardBills(){
 				$("#dash-my-payments").html(message1);
 				message2 = "<i>No one owes me any bill payments.</i>"
 				$("#dash-pay-to-me").html(message2);
+
+				$('#dash-my_balance').html("My balance: <span id='green'>$0</span>");
 			} else {
 				// console.log(bills)
 				$.ajax({
@@ -90,7 +92,7 @@ function updateDashboardChores(){
 			success: function(chores) {
 				// console.log(chores)
 				if (chores.length == 0){
-					// $("#dash-my-chores").html("</i>I don't have any chores to do this week.</i>")
+					$("#dash-my-chores").html("</i>I don't have any chores to do this week.</i>")
 				}
 				else{
 					$.ajax({
