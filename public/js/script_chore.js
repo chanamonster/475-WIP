@@ -236,7 +236,7 @@ function parseAssignments( assigns , chores , past){
 						message += "<td id='red'>Overdue</td>"
 					} else {message += "<td id='red'>Incomplete</td>"}
 					message += "<td><a id='incomplete-b' href='/complete-chore/"+a._id+"'>Mark as Done</a> <a name ='edit-b' id='edit-b'><img src='images/icon_edit.png' width='20px'></a> <a id='delete-b'><img src='images/icon_delete.png' width='20px'></a>"
-					message += "<a id='cal-b' chore='"+chore.chore_name+"' duedate='"+due_date+"' onclick=addReminder(this) class='btn btn-primary'>Create a Personal Reminder</a></td>"
+					message += "<a id='cal-b' chore='"+chore.chore_name+"' duedate='"+due_date+"' onclick=addReminder(this)><img src='images/icon_cal.png'></a></td>"
 					message += "</tr>"
 				}
 				// message += a.user_name +" is assigned to do " + chore.chore_name + " due on " + due_date + "<br>"

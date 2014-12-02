@@ -184,7 +184,7 @@ button, #complete-b, #incomplete-b, #edit-b, #delete-b, #gitem-b, .bill-b, #inpu
 	color: white;
 }
 
-#edit-b, #delete-b, .bill-b{
+#edit-b, #delete-b, .bill-b, #cal-b{
 	padding-top: 9px ;
 	padding-bottom: 2px;
 	vertical-align: center;
@@ -192,8 +192,12 @@ button, #complete-b, #incomplete-b, #edit-b, #delete-b, #gitem-b, .bill-b, #inpu
 	/*display: none;*/
 }
 
-#edit-b img, #delete-b img, .bill-b img{
+#edit-b img, #delete-b img, .bill-b img, #cal-b img{
 	width: 17px;
+}
+
+#cal-b{
+	margin-left: 8px;
 }
 
 #gitem-b{
@@ -814,6 +818,10 @@ li.active a, li.active a:hover {
 #about-content{
 	width: 600px;
 	margin: 0px 15px 0px 40px;
+}
+
+#about-content h3{
+	margin-bottom: 5px;
 }
 
 #about-menu ul{
