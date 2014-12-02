@@ -23,6 +23,10 @@ $(function(){
 		//clear form fields
 	})
 
+	$('#chore_add_reminder_x').click(function(){
+		$("#chore_add_reminder_bkgd").fadeOut()
+	})
+
 	// //choose which type of chore form
 	// $('#existing_chore').click(function(){
 	// 	$('#choices').fadeOut();
@@ -104,6 +108,11 @@ $(function(){
 		$("#due_date").val("");
 		$("#end_date").val("");
 	});
+
+	$("#reminder-button").click(function(){
+		console.log("creating a new reminder...")
+	})
+
 
 })
 
@@ -226,7 +235,8 @@ function parseAssignments( assigns , chores , past){
 						console.log("^^^ ", a.user_name);
 						message += "<td id='red'>Overdue</td>"
 					} else {message += "<td id='red'>Incomplete</td>"}
-					message += "<td><a id='incomplete-b' href='/complete-chore/"+a._id+"'>Mark as Done</a> <a name ='edit-b' id='edit-b'><img src='images/icon_edit.png' width='20px'></a> <a id='delete-b'><img src='images/icon_delete.png' width='20px'></a></td>"
+					message += "<td><a id='incomplete-b' href='/complete-chore/"+a._id+"'>Mark as Done</a> <a name ='edit-b' id='edit-b'><img src='images/icon_edit.png' width='20px'></a> <a id='delete-b'><img src='images/icon_delete.png' width='20px'></a>"
+					message += "<a id='cal-b' chore='"+chore.chore_name+"' duedate='"+due_date+"' onclick=addReminder(this) class='btn btn-primary'>Create a Personal Reminder</a></td>"
 					message += "</tr>"
 				}
 				// message += a.user_name +" is assigned to do " + chore.chore_name + " due on " + due_date + "<br>"
@@ -283,6 +293,19 @@ function parseTheirAssignments( assigns , chores , past){
 		})
 	})
 	return message
+}
+
+function addReminder(item){
+	console.log("popup appears to add a reminder")
+	chore = $(item).attr("chore")
+	duedate = $(item).attr("duedate")
+	date = new Date(duedate)
+	str = date.toISOString()
+	str = str.split('T')[0]
+	$('#chore_add_reminder_bkgd').fadeIn();
+	$('#chore_add_reminder_popup').fadeIn();
+	$("#chore_reminder").val(chore)
+	$("#due_date_reminder").val(str)
 }
 
 function whenDate(date){

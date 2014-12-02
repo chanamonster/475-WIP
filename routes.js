@@ -11,7 +11,7 @@ var express = require('express'),
     bill_controller = require('./routes/bill_controller'),
     pay_controller = require('./routes/pay_controller'),
     chat_controller = require('./routes/chat_controller'),
-
+    gcal = require('./GoogleCalendar'),
 
     Database = require("./models/mymongo.js"),
 
@@ -99,33 +99,59 @@ app.post('/login', passport.authenticate('local-login', {
 // =====================================
 // GOOGLE ==============================
 // =====================================
-//google login
-app.get('/login-google', function(req, res){
-  // if (isLoggedIn){
-  //   gapi.auth.signOut();
-  // }else{
-    res.redirect('/auth/google');
-  // } 
-});
+app.all('/addReminder', isLoggedIn, function(req,res){
+  console.log("in add reminder....")
+  if (req.body.chore){
+    console.log("in if req.body")
+    chore = req.body.chore
+    date = req.body.due_date
+    start_t = req.body.start_time
+    end_t = req.body.end_time
+  }
+  console.log(chore)
+  console.log(date)
+  console.log("start", start_t)
+  console.log("end", end_t)
+  start = new Date(date + " " + start_t)
+  end = new Date(date + " " +end_t)
+  console.log(start)
+  console.log(end)
 
-// app.get('/auth/google',
-//   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
-//                                             'https://www.googleapis.com/auth/userinfo.email',
-//                                             'https://www.googleapis.com/auth/calendar',
-//                                             'https://www.googleapis.com/auth/calendar.readonly'] }),
-//   function(req, res){
-//     // The request will be redirected to Google for authentication, so this
-//     // function will not be called.
-// });
+  if(!req.session.access_token) return res.redirect('/auth');
+  var accessToken = req.session.access_token;
+  // gcal(accessToken).calendarList.list(function(err, data) {
+  //   if(err) return res.send(500,err);
+  //   return res.send(data);
+  // });
+  // res.redirect('/addReminder')
+  // var accessToken     = req.session.access_token;
+  var calendarId  = "primary";
+  var event = {
+              "description": "chore was created from Homies", 
+              "summary":chore,
+              "end": {
+                "dateTime": end
+              },
+             "start": {
+              "dateTime": start
+            }
+  }
+  gcal(accessToken).events.insert(calendarId, event, function(err, data) {
+    if(err) return res.send(500,err);
+    return res.redirect('/chores');
+  });
 
-// app.get('/auth/google/callback',
-//   passport.authenticate('google', { failureRedirect: '/login-google' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     // res.redirect('/');
-//     res.redirect('/settings'); //<< uncomment this
-//     // getCalendarInformation(req, res);
-// });
+})
+
+app.get('/auth',
+  passport.authenticate('google', { session: false }));
+
+app.get('/auth/callback', 
+  passport.authenticate('google', { session: false, failureRedirect: '/login' }),
+  function(req, res) { 
+    req.session.access_token = req.user.accessToken;
+    res.redirect('/addReminder');
+  });
 
 
 // =====================================

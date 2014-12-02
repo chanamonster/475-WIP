@@ -1,10 +1,10 @@
 var express = require('express'),
     path = require('path'),
     passport = require('passport'),
-    // util = require('util'),
+    util = require('util'),
     // url = require('url'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
-    gcal = require('google-calendar'),
+    gcal = require('./GoogleCalendar'),
     configAuth = require('./models/auth'),
     //for local authentication
     mongoose = require('mongoose'),
@@ -47,23 +47,26 @@ var users = [];
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: GOOGLE_CALLBACK_URL
+    callbackURL: GOOGLE_CALLBACK_URL,
+    scope: ['openid', 'email', 'https://www.googleapis.com/auth/calendar']
   },
   function(accessToken, refreshToken, profile, done) {
     // make the code asynchronous
     // User.findOne won't fire until we have all our data back from Google
-    process.nextTick(function() {
-      google_user = {
-        'name': profile.displayName,
-        'first_name': profile.name.givenName,
-        'email': profile.emails[0].value,
-        'accessToken': accessToken,
-        'refreshToken': refreshToken,
-        'picture': profile._json.picture,
-        'log': 'out'
-      };
-      return done(null, profile);
-    });
+    profile.accessToken = accessToken;
+    return done(null, profile)
+    // process.nextTick(function() {
+    //   google_user = {
+    //     'name': profile.displayName,
+    //     'first_name': profile.name.givenName,
+    //     'email': profile.emails[0].value,
+    //     'accessToken': accessToken,
+    //     'refreshToken': refreshToken,
+    //     'picture': profile._json.picture,
+    //     'log': 'out'
+    //   };
+    //   return done(null, profile);
+    // });
   }
 ));
 
@@ -95,24 +98,24 @@ require('./routes.js')(app,passport);
 
 
 
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
-                                            'https://www.googleapis.com/auth/userinfo.email',
-                                            'https://www.googleapis.com/auth/calendar',
-                                            'https://www.googleapis.com/auth/calendar.readonly'] }),
-  function(req, res){
-    // The request will be redirected to Google for authentication, so this
-    // function will not be called.
-  });
+// app.get('/auth/google',
+//   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
+//                                             'https://www.googleapis.com/auth/userinfo.email',
+//                                             'https://www.googleapis.com/auth/calendar',
+//                                             'https://www.googleapis.com/auth/calendar.readonly'] }),
+//   function(req, res){
+//     // The request will be redirected to Google for authentication, so this
+//     // function will not be called.
+//   });
 
-app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/settings' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    // res.redirect('/');
-    res.redirect('/chores'); //<< uncomment this
-    // getCalendarInformation(req, res);
-  });
+// app.get('/auth/google/callback',
+//   passport.authenticate('google', { failureRedirect: '/settings' }),
+//   function(req, res) {
+//     // Successful authentication, redirect home.
+//     // res.redirect('/');
+//     res.redirect('/chores'); //<< uncomment this
+//     // getCalendarInformation(req, res);
+//   });
 
 
 app.listen(44444);

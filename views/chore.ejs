@@ -208,6 +208,25 @@
             <input id="chore_feedback_close" type="submit" value="Close">
           </div> <!-- popup feedback -->
         </div> <!-- popup bkgd -->
+
+        <div class="popup_bkgd" id="chore_add_reminder_bkgd"> <!-- Popup Background for adding chore reminder-->
+          <div class="popup" id="chore_add_reminder_popup">
+            
+              <div class="form_title">Create a Google Calendar Reminder</div>
+              <div id="chore_add_reminder_form">
+              <form action='/addReminder' method="post">
+                Chore: <input id="chore_reminder" name="chore" type="text"><br><br>
+                Date: <input id="due_date_reminder" name="due_date" type="date"><br><br>
+                Start Time: <input id="start_time_reminder" name="start_time" type="time"><br><br>
+                End Time: <input id="end_time_reminder" name="end_time" type="time"><br><br>
+               <input id="reminder-button" type="submit" value="Create Reminder"/>
+              </form>
+              </div>
+              <div id="chore_add_reminder_x"><img src="images/icon_x.png" width="20px"></div>
+            
+          </div>
+          
+        </div> <!-- popup bkgd for reminder -->
     </div> <!-- wrapper -->
   </body>
 </html>
